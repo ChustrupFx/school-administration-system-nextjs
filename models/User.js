@@ -1,4 +1,5 @@
 const { Schema, model, models } = require('../database/index');
+const bcrypt = require('bcrypt');
 
 const schema = new Schema({
 
@@ -18,5 +19,11 @@ const schema = new Schema({
     }
 
 }, {timestamps: true});
+
+schema.pre('save', async function(next) {
+    const hash = await bcrypt.hash(this.password, 10);
+    this.password = hash;
+    next();
+});
 
 module.exports = models.User || model('User', schema);

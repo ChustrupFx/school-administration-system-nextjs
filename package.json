@@ -5,13 +5,25 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "test": "jest --watch --detectOpenHandles --silent=false"
   },
   "dependencies": {
+    "axios": "^0.21.1",
+    "bcrypt": "^5.0.0",
+    "dotenv": "^8.2.0",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.11.13",
     "next": "10.0.5",
     "react": "17.0.1",
-    "react-dom": "17.0.1",
-    "styled-components": "^5.2.1"
+    "react-dom": "17.0.1"
+  },
+  "devDependencies": {
+    "jest": "^26.6.3"
+  },
+  "jest": {
+    "setupFiles": [
+      "dotenv/config"
+    ]
   }
 }
