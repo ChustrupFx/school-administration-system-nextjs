@@ -21,4 +21,9 @@ export default async (req, res) => {
     } catch (e) {
         return res.json({ errorMsg: 'Erro ao fazer o login do usuário.' });
     }
+
+    async function isPasswordCorrect(password, userPassword) {
+        const result = await bcrypt.compare(password, userPassword);
+        return result;
+    }
 }
