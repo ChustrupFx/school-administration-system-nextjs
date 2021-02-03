@@ -1,11 +1,14 @@
 import style from './style.module.css';
+import api from '../../services/api';
 import { CircularProgress } from '@material-ui/core';
 import { Apps } from '@material-ui/icons';
 import { useAuth } from '../../context/Auth';
+import { useRouter } from 'next/router';
 
 const Home = () => {
     const currentYear = new Date().getFullYear();
     const { user, loading } = useAuth();
+    const router = useRouter();
     
     return (
         <>
@@ -92,7 +95,12 @@ const Home = () => {
     }
 
     async function logout() {
-        
+        const response = await api.post('user/logout');
+        const responseData = response.data;
+
+        if (responseData.ok) {
+            router.push('/error', '/');
+        }
     }
 }
 

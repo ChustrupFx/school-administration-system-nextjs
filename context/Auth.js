@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect, useContext } from 'react';
+import { createContext, useState, useEffect, useContext, useRef } from 'react';
 import api from '../services/api';
 
 const AuthContext = createContext();
@@ -10,6 +10,7 @@ export function AuthProvider({ children, maconha }) {
     const [loading, setLoading] = useState(true);
 
     useEffect(async () => {
+        if (isSigned) return;
         const response = await api.get('user/authUser');
         const responseData = response.data;
         
@@ -19,7 +20,7 @@ export function AuthProvider({ children, maconha }) {
         }
 
         setLoading(false);
-    }, []);
+    });
 
     return (
         <AuthContext.Provider value={{user, token, isSigned, loading}}>
