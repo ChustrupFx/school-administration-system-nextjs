@@ -1,5 +1,6 @@
 const User = require('../../../models/User');
 const api = require('../../../services/api/index');
+const cookie = require('cookie');
 
 describe('user', () => {
     const mockUser = {
@@ -7,6 +8,7 @@ describe('user', () => {
         registrationCode: '00000',
         password: '123'
     };
+    var authToken = null;
 
     afterAll(async () => {
         const { registrationCode } = mockUser;
@@ -37,13 +39,31 @@ describe('user', () => {
     });
 
     test('should login with credentials', async () => {
-        const { registrationCode, password } = mockUser; 
-
         const response = await api.post('/user/login', mockUser);
         const responseData = response.data;
+        authToken = responseData.token;
 
         expect(responseData.ok).toBeTruthy();
         expect(responseData.token).toBeTruthy();
+    });
+
+    test('should get authenticated user', async () => {
+        const response = await api.get('/user/authUser', {
+            headers: {
+                'Cookie': cookie.serialize('auth_token', authToken, {
+                    httpOnly: true,
+                    maxAge: 60 * 60 * 24,
+                    path: '/',
+                    secure: false,
+                    sameSite: 'strict'
+                })
+            },
+            withCredentials: true,
+        });
+        const responseData = response.data;
+        
+        expect(responseData.ok).toBeTruthy();
+        expect(responseData.user).toBeTruthy();
         expect(responseData.user).not.toHaveProperty('password');
     });
 });

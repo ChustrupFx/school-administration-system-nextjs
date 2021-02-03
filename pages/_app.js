@@ -1,6 +1,14 @@
 import '../styles/global.css';
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+import { AuthProvider } from '../context/Auth';
+import { useEffect } from 'react';
+
+function MyApp({ Component, pageProps, maconha }) {
+  return (
+    <AuthProvider>
+      <Component {...pageProps} />
+      <h1>{maconha}</h1>
+    </AuthProvider>
+  )
 }
 
 export default MyApp

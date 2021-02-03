@@ -2,6 +2,7 @@ import User from '../../../models/User';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
+import cookie from 'cookie';
 dotenv.config();
 
 export default async (req, res) => {
@@ -10,20 +11,32 @@ export default async (req, res) => {
     try {
         const user = await User.findOne({ registrationCode })
                         .select('+password');
-
-        if (!user || !await bcrypt.compare(password, user.password)) 
+        
+        if (!user || !isPasswordCorrect(password, user.password)) 
             return res.json({ errorMsg: 'Email ou senha incorretos.' });
-
+        
         const token = await jwt.sign({ ...user }, process.env.SECRET_KEY);
         user.password = undefined;
-
-        return res.json({ ok: true, user, token });
+        setTokenCookie(token);
+        
+        return res.json({ ok: true, token });
     } catch (e) {
+        console.log(e);
         return res.json({ errorMsg: 'Erro ao fazer o login do usuário.' });
     }
 
-    async function isPasswordCorrect(password, userPassword) {
-        const result = await bcrypt.compare(password, userPassword);
+    function isPasswordCorrect(password, userPassword) {
+        const result = bcrypt.compareSync(password, userPassword);
         return result;
     }
+
+   function setTokenCookie(token) {
+       res.setHeader('Set-Cookie', cookie.serialize('auth_token', token, {
+           httpOnly: true,
+           maxAge: 60 * 60 * 24,
+           sameSite: 'strict',
+           secure: process.env.NODE_ENV !== 'development',
+           path: '/'
+       }));
+   }
 }

@@ -1,19 +1,31 @@
 import style from './style.module.css';
-
-import { useState } from 'react';
 import api from '../services/api/index';
-
-export default function Home() {
+import { useState, useEffect } from 'react';
+import { useAuth } from '../context/Auth';
+import { useRouter } from 'next/router';
+ 
+export default function Login() {
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
+  const { isSigned, loading, user } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (loading) return;
+    if (isSigned) {
+      router.push('/home');
+    }
+  }, [loading]);
+
+  if (loading || isSigned) return null;
 
   return (
     <div className={style.background}>
       <div className={style.container}>
         <form className={style.form} onSubmit={handleSubmit}>
           <h1 className={style.title}>Login</h1>
-          {errorMsg !== '' && 
+          {errorMsg && 
             <div className={style.errormessage}>{errorMsg}</div>
           }
           <label className={style.label}>Login</label>
@@ -34,17 +46,15 @@ export default function Home() {
 
     const response = await api.post('/user/login', {
       registrationCode: login,
-      password
+      password,
     });
-    const { ok, errorMsg } = response.data;
+    const responseData = response.data;
 
-    if (ok) {
-      console.log(ok);
-    } else {
-      setErrorMsg(errorMsg);
+    if (responseData.ok) {
+      router.push('/home');
     }
-
-    console.log(response.data);
+    
+    setErrorMsg(responseData.errorMsg);
 
   }
 }
