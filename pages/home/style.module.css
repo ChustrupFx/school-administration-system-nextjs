@@ -6,7 +6,7 @@
     left: 0;
     top: 0;
     overflow: auto;
-
+    width: 15%;
 }
 
 .schoolTitle {
@@ -48,4 +48,21 @@
 
 .itemLink > span {
     font-size: 1.1rem;
+}
+
+.pageContent {
+    margin-left: 15%;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr;
+    gap: 10px
+}
+
+.cardHeader {
+    text-align: center;
+    background-color: var(--primary);
+    color: white;
 }

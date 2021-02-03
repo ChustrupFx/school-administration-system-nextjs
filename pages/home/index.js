@@ -1,11 +1,12 @@
 import style from './style.module.css';
+import { CircularProgress } from '@material-ui/core';
 import { Apps } from '@material-ui/icons';
 import { useAuth } from '../../context/Auth';
 
 const Home = () => {
     const currentYear = new Date().getFullYear();
-    const { user } = useAuth();
-
+    const { user, loading } = useAuth();
+    
     return (
         <>
             <div className={style.sidebar}>
@@ -13,16 +14,18 @@ const Home = () => {
                     <h1 className={style.schoolTitle}>Escola</h1>
                 </div>
                 <div className={style.studentInfo}>
-                    <div className={style.studentMeta}>
-                        <img className={style.studentImg} src="/images/default-user-image.png"></img>
-                        <div>
-                            <p>{user.name}</p>
-                            <p>EM 3ºB - Matutino</p>
-                            <p>Ensino Médio</p>
-                        </div>
-                    </div>
+                    {loading && <CircularProgress />}
+                    {!loading &&
+                        <div className={style.studentMeta}>
+                            <img className={style.studentImg} src="/images/default-user-image.png"></img>
+                            <div>
+                                <p>{user.name}</p>
+                                <p>EM {user.grade}º{user.class} - {getShift()}</p>
+                                <p>{getDegree()}</p>
+                            </div>
+                        </div>}
                     <div className={style.studentRegistration}>
-                        <p>Matrícula: {user.registrationCode}</p>
+                        <p>Matrícula: {user.registrationCode}{loading && <CircularProgress size="10px" />}</p>
                         {currentYear}
                     </div>
                 </div>
@@ -40,8 +43,52 @@ const Home = () => {
                     </nav>
                 </div>
             </div>
+            <div className={style.pageContent}>
+            <div>
+                <div className={style.cards}>
+                    <div>
+                        <div className={style.cardHeader}>
+                            <h2>Tarefas</h2>
+                        </div>
+                        <div className={style.cardBody}>
+                            
+                        </div>
+                    </div>
+                    <div>
+                        <div className={style.cardHeader}>
+                            <h2>Conteúdo</h2>
+                        </div>
+                        <div className={style.cardBody}>
+                            
+                        </div>
+                    </div>
+                    <div>
+                        <div className={style.cardHeader}>
+                            <h2>Notícias</h2>
+                        </div>
+                        <div className={style.cardBody}>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
         </>
     );
+
+    function getShift() {
+        const shifts = ['Matutino', 'Vespertino'];
+        const userShift = user.shift;
+        return shifts[userShift];
+    }
+
+    function getDegree() {
+        const degrees = ['Ensino Fudamental I',
+                        'Ensino Funfamental II',
+                        'Ensino Médio'];
+        const userDegree = user.degree;
+        return degrees[userDegree];
+    }
 }
 
 export default Home;

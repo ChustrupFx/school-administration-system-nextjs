@@ -14,6 +14,7 @@ export default async(req, res) => {
 
         return res.json({ ok: true, user })
     } catch (e) {
+        console.log(e)
         res.json({ errorMsg: 'Erro ao registrar usuário.' });
     }
 
