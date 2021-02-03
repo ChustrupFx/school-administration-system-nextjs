@@ -66,3 +66,11 @@
     background-color: var(--primary);
     color: white;
 }
+
+.logoutBtn {
+    font-size: 10px;
+    cursor: pointer;
+    color: white;
+    background-color: var(--primary);
+    padding: 5px;
+}

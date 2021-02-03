@@ -22,6 +22,7 @@ const Home = () => {
                                 <p>{user.name}</p>
                                 <p>EM {user.grade}º{user.class} - {getShift()}</p>
                                 <p>{getDegree()}</p>
+                                <button className={style.logoutBtn} onClick={logout}>Logout</button>
                             </div>
                         </div>}
                     <div className={style.studentRegistration}>
@@ -51,7 +52,7 @@ const Home = () => {
                             <h2>Tarefas</h2>
                         </div>
                         <div className={style.cardBody}>
-                            
+
                         </div>
                     </div>
                     <div>
@@ -88,6 +89,10 @@ const Home = () => {
                         'Ensino Médio'];
         const userDegree = user.degree;
         return degrees[userDegree];
+    }
+
+    async function logout() {
+        
     }
 }
 
