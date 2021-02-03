@@ -1,10 +1,6 @@
-const { Schema, model } = require('../database/index');
+const { Schema, model, models } = require('../database/index');
 
 const schema = new Schema({
-    user: {
-        type: Schema.Types.ObjectId,
-        ref: 'User'
-    },
     degree: {
         type: Schema.Types.ObjectId,
         ref: 'Degree'
@@ -25,4 +21,4 @@ const schema = new Schema({
     timestamps: true,
 });
 
-module.exports = model('Task', schema);
+module.exports = models.Task || model('Task', schema);
