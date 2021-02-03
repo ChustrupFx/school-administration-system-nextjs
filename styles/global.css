@@ -8,3 +8,16 @@
     box-sizing: border-box;
     outline: none;
 }
+
+img {
+    max-width: 100%;
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    cursor: pointer;
+}
