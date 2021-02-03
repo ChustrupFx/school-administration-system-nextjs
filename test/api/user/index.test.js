@@ -6,7 +6,11 @@ describe('user', () => {
     const mockUser = {
         name: 'test',
         registrationCode: '00000',
-        password: '123'
+        password: '123',
+        grade: 8,
+        degree: 2,
+        shift: 0,
+        class: 'B'
     };
     var authToken = null;
 
@@ -27,6 +31,10 @@ describe('user', () => {
         expect(responseData.user).toHaveProperty('_id');
         expect(responseData.user).toHaveProperty('name');
         expect(responseData.user).toHaveProperty('registrationCode');
+        expect(responseData.user).toHaveProperty('grade');
+        expect(responseData.user).toHaveProperty('shift');
+        expect(responseData.user).toHaveProperty('class');
+        expect(responseData.user).toHaveProperty('degree');
         expect(responseData.user).not.toHaveProperty('password');
     });
 
