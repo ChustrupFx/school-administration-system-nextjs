@@ -22,7 +22,7 @@ const Home = () => {
                         </div>
                     </div>
                     <div className={style.studentRegistration}>
-                        <p>Matrícula: 02591</p>
+                        <p>Matrícula: {user.registrationCode}</p>
                         {currentYear}
                     </div>
                 </div>

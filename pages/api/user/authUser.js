@@ -14,7 +14,6 @@ export default async (req, res) => {
 
         const decoded = await jwt.decode(auth_token);
         const user = decoded._doc;
-        user.password = undefined;
 
         return res.json({ ok: true, user });
     } catch(e) {

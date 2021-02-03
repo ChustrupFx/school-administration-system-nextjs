@@ -10,7 +10,6 @@ export default async(req, res) => {
         }
         
         const user = await User.create(body);
-
         user.password = undefined;
 
         return res.json({ ok: true, user })

@@ -16,6 +16,23 @@ const schema = new Schema({
         type: String,
         required: true,
         select: false,
+    },
+    grade: {
+        type: Number,
+        required: true,
+    },
+    degree: {
+        type: Number,
+        required: true,
+        max: 2
+    },
+    class: {
+        type: String,
+        required: true,
+    },
+    shift: {
+        type: Number,
+        required: true,
     }
 
 }, {timestamps: true});
@@ -23,6 +40,7 @@ const schema = new Schema({
 schema.pre('save', async function(next) {
     const hash = await bcrypt.hash(this.password, 10);
     this.password = hash;
+
     next();
 });
 

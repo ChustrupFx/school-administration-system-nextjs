@@ -15,8 +15,8 @@ export default async (req, res) => {
         if (!user || !isPasswordCorrect(password, user.password)) 
             return res.json({ errorMsg: 'Email ou senha incorretos.' });
         
-        const token = await jwt.sign({ ...user }, process.env.SECRET_KEY);
         user.password = undefined;
+        const token = await jwt.sign({ ...user }, process.env.SECRET_KEY);
         setTokenCookie(token);
         
         return res.json({ ok: true, token });
