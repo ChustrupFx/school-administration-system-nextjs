@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+require('dotenv').config();
 
-mongoose.connect('mongodb://localhost/school', {
+mongoose.connect(process.env.DB_URL, {
     useNewUrlParser: true,
 });
 
