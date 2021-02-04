@@ -18,21 +18,20 @@ const schema = new Schema({
         select: false,
     },
     grade: {
-        type: Number,
-        required: true,
+        type: Schema.Types.ObjectId,
+        ref: 'Grade'
     },
     degree: {
-        type: Number,
-        required: true,
-        max: 2
+        type: Schema.Types.ObjectId,
+        ref: 'Degree'
     },
     class: {
         type: String,
-        required: true,
+        required: true
     },
     shift: {
-        type: Number,
-        required: true,
+        type: Schema.Types.ObjectId,
+        ref: 'Shift'
     }
 
 }, {timestamps: true});
