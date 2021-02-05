@@ -10,7 +10,8 @@ describe('user', () => {
         grade: 8,
         degree: 2,
         shift: 0,
-        class: 'B'
+        class: 'B',
+        role: 0
     };
     var authToken = null;
 
