@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "test": "jest --watch --detectOpenHandles --silent=false"
+    "test": "jest --watch --detectOpenHandles --silent=false",
+    "seed": "node database/seed/index.js"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.3",
@@ -17,7 +18,10 @@
     "dotenv": "^8.2.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.11.13",
+    "mongoose-auto-increment": "^5.0.1",
+    "mongoose-seed": "^0.6.0",
     "next": "10.0.5",
+    "path": "^0.12.7",
     "react": "17.0.1",
     "react-dom": "17.0.1"
   },
