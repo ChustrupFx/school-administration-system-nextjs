@@ -1,0 +1,11 @@
+{
+    "model": "Shift",
+    "documents": [
+        {
+            "name": "Matutino"
+        },
+        {
+            "name": "Vespertino"
+        }
+    ]
+}
