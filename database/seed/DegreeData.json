@@ -1,0 +1,14 @@
+{
+    "model": "Degree",
+    "documents": [
+        {
+            "name": "Ensino Fundamental 1"
+        },
+        {
+            "name": "Ensino Fundamental 2"
+        },
+        {
+            "name": "Ensino Médio"
+        }
+    ]
+}
