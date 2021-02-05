@@ -1,0 +1,14 @@
+{
+    "model": "Role",
+    "documents": [
+        {
+            "name": "Student"
+        },
+        {
+            "name": "Teacher"
+        },
+        {
+            "name": "Admin"
+        }
+    ]
+}
