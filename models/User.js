@@ -32,6 +32,10 @@ const schema = new Schema({
     shift: {
         type: Schema.Types.ObjectId,
         ref: 'Shift'
+    },
+    role: {
+        type: Schema.Types.ObjectId,
+        ref: 'Role'
     }
 
 }, {timestamps: true});
