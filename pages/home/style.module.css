@@ -52,19 +52,35 @@
 
 .pageContent {
     margin-left: 15%;
+    background-color: lightgray;
+    height: 100vh;
+    overflow: hidden;
 }
 
 .cards {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: 1fr;
-    gap: 10px
+    gap: 10px;
+    margin: 50px 30px;
+}
+
+.card {
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
 }
 
 .cardHeader {
     text-align: center;
     background-color: var(--primary);
     color: white;
+}
+
+.cardBody {
+    min-height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
 }
 
 .logoutBtn {

@@ -1,4 +1,7 @@
 const User = require('../../../models/User');
+const Shift = require('../../../models/Shift');
+const Degree = require('../../../models/Degree');
+const Role = require('../../../models/Role');
 const api = require('../../../services/api/index');
 const cookie = require('cookie');
 
@@ -8,11 +11,20 @@ describe('user', () => {
         registrationCode: '00000',
         password: '123',
         grade: 8,
-        degree: 2,
-        shift: 0,
         class: 'B'
     };
     var authToken = null;
+
+    beforeAll(async () => {
+        const shift = await Shift.findOne({ name: 'Matutino' });
+        const degree = await Degree.findOne({ name: 'Ensino Médio' });
+        const role = await Role.findOne({ name: 'Student' });
+        console.log(role);
+        
+        mockUser.shift = shift._id;
+        mockUser.degree = shift._id;
+        mockUser.role = role._id;
+    });
 
     afterAll(async () => {
         const { registrationCode } = mockUser;
@@ -69,7 +81,7 @@ describe('user', () => {
             withCredentials: true,
         });
         const responseData = response.data;
-        
+        console.log(responseData);
         expect(responseData.ok).toBeTruthy();
         expect(responseData.user).toBeTruthy();
         expect(responseData.user).not.toHaveProperty('password');

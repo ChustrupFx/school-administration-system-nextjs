@@ -5,10 +5,10 @@ import { useAuth } from '../context/Auth';
 import { useRouter } from 'next/router';
  
 export default function Login() {
-  const [login, setLogin] = useState('');
+  const [code, setCode] = useState('');
   const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
-  const { isSigned, loading, user } = useAuth();
+  const { isSigned, loading, user, login } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
@@ -29,7 +29,7 @@ export default function Login() {
             <div className={style.errormessage}>{errorMsg}</div>
           }
           <label className={style.label}>Login</label>
-          <input className={style.input} placeholder="Login" type="text" value={login} onChange={(e) => setLogin(e.target.value)}/>
+          <input className={style.input} placeholder="Login" type="text" value={code} onChange={(e) => setCode(e.target.value)}/>
 
           <label className={style.label}>Senha</label>
           <input className={style.input} placeholder="Senha" type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
@@ -44,17 +44,13 @@ export default function Login() {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    const response = await api.post('/user/login', {
-      registrationCode: login,
-      password,
+    const responseData = await login({ 
+      registrationCode: code,
+      password
     });
-    const responseData = response.data;
-
-    if (responseData.ok) {
-      router.push('/home');
-    }
     
-    setErrorMsg(responseData.errorMsg);
+    if (responseData)
+      setErrorMsg(responseData.errorMsg);
 
   }
 }

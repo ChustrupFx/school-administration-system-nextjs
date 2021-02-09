@@ -1,33 +1,62 @@
+import { useRouter } from 'next/router';
 import { createContext, useState, useEffect, useContext, useRef } from 'react';
 import api from '../services/api';
 
 const AuthContext = createContext();
 
-export function AuthProvider({ children, maconha }) {
+export function AuthProvider({ children }) {
     const [user, setUser] = useState({});
     const [token, setToken] = useState('');
     const [isSigned, setIsSigned] = useState(false);
     const [loading, setLoading] = useState(true);
 
-    useEffect(async () => {
-        if (isSigned) return;
-        const response = await api.get('user/authUser');
-        const responseData = response.data;
-        
-        if (responseData.ok) {
-            setUser(responseData.user);
-            setIsSigned(true);
-        }
+    const router = useRouter();
 
-        setLoading(false);
-    });
+    const mounted = useRef(true);
+
+    useEffect(() => {
+        getAuthProperties();
+
+        return () => { mounted.current = false; console.log('unmounted auth') }
+    }, []);
 
     return (
-        <AuthContext.Provider value={{user, token, isSigned, loading}}>
+        <AuthContext.Provider value={{ user, token, isSigned, loading, login }}>
             {children}
         </AuthContext.Provider>
     );
+
+    async function getAuthProperties() {
+        if (isSigned) return;
+        const response = await api.get('user/authUser');
+        if (!mounted.current) return;
+        const responseData = response.data;
+        if (responseData.ok) {
+            api.defaults.headers.common['Authorization'] = `Bearer ${responseData.token}`;
+            setUser(responseData.user);
+            setIsSigned(true);
+        }
+        setLoading(false);
+    }
+
+    async function login({ registrationCode, password }) {
+        const response = await api.post('/user/login', {
+            registrationCode,
+            password,
+        });
+        const responseData = response.data;
+        console.log(responseData);
+    
+        if (!mounted.current) return;
+        if (responseData.ok) {
+            await getAuthProperties();
+            router.push('/home');
+        }
+
+        return responseData;
+    }
 }
+
 
 export function useAuth() {
     const context = useContext(AuthContext);

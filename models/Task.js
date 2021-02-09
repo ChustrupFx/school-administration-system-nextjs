@@ -5,10 +5,6 @@ const schema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Degree'
     },
-    subject: {
-        type: Schema.Types.ObjectId,
-        ref: 'Subject'
-    },
     body: {
         type: String,
         required: true,

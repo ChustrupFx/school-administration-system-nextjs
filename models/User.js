@@ -18,8 +18,8 @@ const schema = new Schema({
         select: false,
     },
     grade: {
-        type: Schema.Types.ObjectId,
-        ref: 'Grade'
+        type: Number,
+        required: true
     },
     degree: {
         type: Schema.Types.ObjectId,

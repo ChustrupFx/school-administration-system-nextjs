@@ -1,4 +1,7 @@
 const jwt = require('jsonwebtoken');
+const User = require('../../../models/User');
+const Degree = require('../../../models/Degree');
+const Shift = require('../../../models/Shift');
 
 export default async (req, res) => {
     try {
@@ -13,11 +16,14 @@ export default async (req, res) => {
         }
 
         const decoded = await jwt.decode(auth_token);
-        const user = decoded._doc;
+        const userId = decoded.userId;
+        const user = await User.findById(userId)
+                            .populate('degree shift');
         user.password = undefined;
 
-        return res.json({ ok: true, user });
+        return res.json({ ok: true, user, token: auth_token });
     } catch(e) {
+        console.log(e)
         return res.json({ errorMsg: 'Erro ao tentar achar informações do usuário.' })
     }
 }
