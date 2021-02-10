@@ -11,12 +11,12 @@ describe('get tasks by user id', () => {
     var user;
     var token;
 
-    beforeEach(async () => {
+    beforeAll(async () => {
         user = await createMockUser();
         token = await jwt.sign({ userId: user._id }, process.env.SECRET_KEY);
     });
     test('should get tasks by user id', async () => {
-        const response = await api.post(`/user/${user._id}/tasks`, {
+        const response = await api.post(`/user/${user._id}/tasks`, {}, {
             headers: {
                 authorization: `Bearer ${token}`
             }
@@ -24,6 +24,10 @@ describe('get tasks by user id', () => {
         const responseData = response.data;
 
         expect(responseData.ok).toBeTruthy();
+    });
+
+    afterAll(async () => {
+        await user.remove();
     });
 
 });
@@ -40,7 +44,8 @@ async function createMockUser() {
         grade: 2,
         class: 'B',
         role: role._id,
-        registrationCode: '00000'
+        registrationCode: '00050',
+        password: '123'
     }
 
     const user = await User.create(mockUser);
