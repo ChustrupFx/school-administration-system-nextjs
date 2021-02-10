@@ -16,8 +16,11 @@ const Home = () => {
     const [tasks, setTasks] = useState([]);
     const [loadingTasks, setLoadingTasks] = useState(true);
 
-    const { data: content, error: contentError } = useSWR(isSigned ? `/user/${user._id}/content` : null, contentFetcher);
+    const { data: content, error: contentError } = useSWR(isSigned ? `/user/${user._id}/content?limit=3` : null, contentFetcher);
     const loadingContent = !content && !contentError;
+
+    const { data: news, error: newsError } = useSWR(isSigned ? `/user/${user._id}/news?limit=3` : null, newsFetcher);
+    const loadingNews = !news && !newsError;
 
     const mounted = useRef(true);
 
@@ -50,7 +53,6 @@ const Home = () => {
                         <div>
                             <p>{user.name}</p>
                             <p>EM {user.grade}º{user.class} - {user.shift.name}</p>
-                            <p></p>
                             <button className={style.logoutBtn} onClick={logout}>Logout</button>
                         </div>
                     </div>
@@ -98,9 +100,9 @@ const Home = () => {
                             </div>
                             <div className={style.cardBody}>
                                 {loadingContent && <CircularProgress />}
-                                {!loadingContent && (contentError || content.errorMsg) && <p>Erro ao encontrar o conteúdo.</p>}
+                                {!loadingContent && (contentError || !content.ok) && <p>Erro ao encontrar o conteúdo.</p>}
                                 {!loadingContent && content.ok && content.contents.map(item => (
-                                    <p>{item.body}</p>
+                                    <p key={item._id}>{item.body}</p>
                                 ))}
                             </div>
                         </div>
@@ -109,7 +111,11 @@ const Home = () => {
                                 <h2>Notícias</h2>
                             </div>
                             <div className={style.cardBody}>
-
+                                {loadingNews && <CircularProgress />}
+                                {!loadingNews && (newsError || !news.ok) && <p>Erro ao encontrar notícias.</p>}
+                                {!loadingNews && news.ok && news.news.map(item => (
+                                    <p key={item._id}>{item.body}</p>
+                                ))}
                             </div>
                         </div>
                     </div>
@@ -131,6 +137,12 @@ const Home = () => {
     }
 
     async function contentFetcher(key) {
+        const response = await api.get(key);
+        const data = response.data;
+        return data;
+    }
+
+    async function newsFetcher(key) {
         const response = await api.get(key);
         const data = response.data;
         return data;
