@@ -17,12 +17,13 @@ describe('news creation', () => {
 
         expect(data.ok).toBeTruthy();
         expect(data.news).toBeTruthy();
+        await data.news.remove();
     });
-
+    
     test('should fail if I don\'t supply a body', async () => {
         const response = await api.post('/new/create');
         const data = response.data;
-
+        
         expect(data.ok).toBeFalsy();
         expect(data.news).toBeFalsy();
     });
