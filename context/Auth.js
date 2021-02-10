@@ -21,7 +21,7 @@ export function AuthProvider({ children }) {
     }, []);
 
     return (
-        <AuthContext.Provider value={{ user, token, isSigned, loading, login }}>
+        <AuthContext.Provider value={{ user, token, isSigned, loading, login, logout }}>
             {children}
         </AuthContext.Provider>
     );
@@ -54,6 +54,15 @@ export function AuthProvider({ children }) {
         }
 
         return responseData;
+    }
+
+    async function logout() {
+        const response = await api.post('user/logout');
+        const responseData = response.data;
+
+        if (responseData.ok) {
+            router.push('/error', '/');
+        }
     }
 }
 
