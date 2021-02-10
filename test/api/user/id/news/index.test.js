@@ -44,7 +44,7 @@ describe('get new by user id', () => {
             grade: 2,
             class: 'B',
             role: role._id,
-            registrationCode: '00000',
+            registrationCode: '12345',
             password: '123'
         }
     
