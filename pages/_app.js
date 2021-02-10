@@ -1,12 +1,14 @@
 import '../styles/global.css';
 import { AuthProvider } from '../context/Auth';
+import { SidebarProvider } from '../context/Sidebar';
 import { useEffect } from 'react';
 
-function MyApp({ Component, pageProps, maconha }) {
+function MyApp({ Component, pageProps }) {
   return (
     <AuthProvider>
-      <Component {...pageProps} />
-      <h1>{maconha}</h1>
+      <SidebarProvider>
+        <Component {...pageProps} />
+      </SidebarProvider>
     </AuthProvider>
   )
 }

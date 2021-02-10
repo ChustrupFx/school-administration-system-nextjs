@@ -9,7 +9,6 @@ import { useState, useEffect, useRef } from 'react';
 import ProtectedRoute from '../../components/ProtectedRoute/ProtectedRoute';
 
 const Home = () => {
-    const currentYear = new Date().getFullYear();
     const { user, loading, isSigned } = useAuth();
     const router = useRouter();
 
@@ -43,38 +42,6 @@ const Home = () => {
 
     return (
         <>
-            <div className={style.sidebar}>
-                <div>
-                    <h1 className={style.schoolTitle}>Escola</h1>
-                </div>
-                <div className={style.studentInfo}>
-                    <div className={style.studentMeta}>
-                        <img className={style.studentImg} src="/images/default-user-image.png"></img>
-                        <div>
-                            <p>{user.name}</p>
-                            <p>EM {user.grade}º{user.class} - {user.shift.name}</p>
-                            <button className={style.logoutBtn} onClick={logout}>Logout</button>
-                        </div>
-                    </div>
-                    <div className={style.studentRegistration}>
-                        <p>Matrícula: {user.registrationCode}{loading && <CircularProgress size="10px" />}</p>
-                        {currentYear}
-                    </div>
-                </div>
-                <hr />
-                <div>
-                    <nav>
-                        <ul className={style.navList}>
-                            <li className={style.navItem}>
-                                <a className={style.itemLink}>
-                                    <Apps />
-                                    <span>INÍCIO</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
             <div className={style.pageContent}>
                 <div>
                     <div className={style.cards}>
@@ -146,15 +113,6 @@ const Home = () => {
         const response = await api.get(key);
         const data = response.data;
         return data;
-    }
-
-    async function logout() {
-        const response = await api.post('user/logout');
-        const responseData = response.data;
-
-        if (responseData.ok) {
-            router.push('/error', '/');
-        }
     }
 }
 
