@@ -3,9 +3,8 @@ require('../../../models/Degree');
 
 export default async (req, res) => {
 
-    const limit = req.body.limit || 0;
-    const page = req.body.page * limit || 0;
-
+    const limit = parseInt(req.query.limit) || 0;
+    const page = parseInt(req.query.page * limit) || 0;
     try {
         const tasks = await Task.find({})
                             .populate('degree')
