@@ -10,9 +10,7 @@ describe('task index tests', () => {
     })
 
     test('response length should be 1 or less if limit parameter be 1', async () => {
-        const response = await api.post('/task/', {
-            limit: 1
-        });
+        const response = await api.post('/task/?limit=1');
         const responseData = response.data;
 
         expect(responseData.ok).toBeTruthy();

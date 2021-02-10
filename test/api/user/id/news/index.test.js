@@ -30,7 +30,7 @@ describe('get new by user id', () => {
 
     afterAll(async () => {
         await user.remove();
-    });
+    }, 0);
 
     async function createMockUser() {
 

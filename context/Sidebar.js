@@ -1,4 +1,4 @@
-import { createContext, } from 'react'
+import { createContext, useContext, useState, } from 'react'
 import style from '../styles/sidebar.module.css';
 import { useAuth } from '../context/Auth';
 import { Apps, Create } from '@material-ui/icons';
@@ -11,11 +11,13 @@ export const SidebarProvider = ({ children }) => {
     const currentYear = new Date().getFullYear();
     const { user, loading, isSigned, logout } = useAuth();
 
+    const [isOn, setIsOn] = useState(false);
+
     if (loading) return null;
 
     return (
-        <SidebarContext.Provider>
-            <div className={style.sidebar}>
+        <SidebarContext.Provider value={{ isOn, setIsOn }}>
+            {isSigned && <div className={style.sidebar}>
                 <div>
                     <h1 className={style.schoolTitle}>Escola</h1>
                 </div>
@@ -56,9 +58,14 @@ export const SidebarProvider = ({ children }) => {
                         </ul>
                     </nav>
                 </div>
-            </div>
+            </div>}
             { children}
         </SidebarContext.Provider>
     )
 
+}
+
+export function useSidebar() {
+    const context = useContext(SidebarContext);
+    return context;
 }

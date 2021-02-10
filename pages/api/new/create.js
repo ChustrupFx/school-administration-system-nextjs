@@ -5,7 +5,7 @@ const handler = async (req, res) => {
 
     try {
         const news = await News.create(body);
-
+        
         return res.json({ ok: true, news });
     } catch (e) {
         return res.json({ errorMsg: 'Erro ao criar uma notícia nova.' });

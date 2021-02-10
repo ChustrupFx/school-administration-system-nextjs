@@ -1,4 +1,5 @@
 const Degree = require('../../../models/Degree');
+const News = require('../../../models/News');
 const api = require('../../../services/api/index');
 
 describe('news creation', () => {
@@ -17,7 +18,8 @@ describe('news creation', () => {
 
         expect(data.ok).toBeTruthy();
         expect(data.news).toBeTruthy();
-        await data.news.remove();
+        console.log(data.news);
+        await News.deleteOne(data.news);
     });
     
     test('should fail if I don\'t supply a body', async () => {

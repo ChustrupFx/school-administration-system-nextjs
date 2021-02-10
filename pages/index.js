@@ -3,13 +3,19 @@ import api from '../services/api/index';
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/Auth';
 import { useRouter } from 'next/router';
+import { useSidebar } from '../context/Sidebar';
  
 export default function Login() {
   const [code, setCode] = useState('');
   const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
+  const { setIsOn } = useSidebar();
   const { isSigned, loading, user, login } = useAuth();
   const router = useRouter();
+
+  useEffect(() => {
+    setIsOn(false);
+  });
 
   useEffect(() => {
     if (loading) return;
