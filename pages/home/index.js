@@ -1,5 +1,6 @@
 import style from './style.module.css';
 import api from '../../services/api';
+import useSWR from 'swr';
 import { CircularProgress } from '@material-ui/core';
 import { Apps } from '@material-ui/icons';
 import { useAuth } from '../../context/Auth';
@@ -14,6 +15,9 @@ const Home = () => {
 
     const [tasks, setTasks] = useState([]);
     const [loadingTasks, setLoadingTasks] = useState(true);
+
+    const { data: content, error: contentError } = useSWR(isSigned ? `/user/${user._id}/content` : null, contentFetcher);
+    const loadingContent = !content && !contentError;
 
     const mounted = useRef(true);
 
@@ -93,7 +97,11 @@ const Home = () => {
                                 <h2>Conteúdo</h2>
                             </div>
                             <div className={style.cardBody}>
-
+                                {loadingContent && <CircularProgress />}
+                                {!loadingContent && (contentError || content.errorMsg) && <p>Erro ao encontrar o conteúdo.</p>}
+                                {!loadingContent && content.ok && content.contents.map(item => (
+                                    <p>{item.body}</p>
+                                ))}
                             </div>
                         </div>
                         <div className={style.card}>
@@ -120,6 +128,12 @@ const Home = () => {
             }
             setLoadingTasks(false);
         } catch (e) { }
+    }
+
+    async function contentFetcher(key) {
+        const response = await api.get(key);
+        const data = response.data;
+        return data;
     }
 
     async function logout() {
