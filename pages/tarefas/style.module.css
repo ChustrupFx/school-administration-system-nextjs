@@ -1,0 +1,58 @@
+.taskBody>h2 {
+    text-align: center;
+    font-size: 2rem;
+    color: white;
+}
+
+.taskBody {
+    background-color: var(--primary);
+    padding: 10px 0;
+}
+
+.pageButtonsContainer {
+    display: flex;
+    padding: 10px 1.5rem;
+    justify-content: flex-end;
+}
+
+.pageButtons {
+    overflow: hidden;
+    border-radius: 5px;
+}
+
+.pageButtons>button {
+    background-color: var(--primary);
+}
+
+.pageButtons > .buttonOff {
+    background-color: lightblue;
+    cursor: default;
+}
+
+.pageButtons svg {
+    font-size: 2rem;
+    color: white;
+}
+
+.taskList {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.taskList > div:not(.loading) {
+    text-align: center;
+    font-size: 1.5rem;
+    padding: 10px 0;
+    position: relative;
+}
+
+.taskList > div:not(:last-child):not(.loading):after {
+    content: '';
+    width: 100%;
+    height: 1px;
+    background-color: black;
+    position: absolute;
+    bottom: 0;
+    display: block;
+}
