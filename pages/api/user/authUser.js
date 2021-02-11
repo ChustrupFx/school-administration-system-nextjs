@@ -27,7 +27,3 @@ export default async (req, res) => {
         return res.json({ errorMsg: 'Erro ao tentar achar informações do usuário.' })
     }
 }
-
-export async function getServerSideProps({ req }) {
-    console.log(req.headers);
-}
