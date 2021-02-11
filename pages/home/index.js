@@ -1,4 +1,5 @@
 import style from './style.module.css';
+import pageStyle from '../../styles/page.module.css';
 import api from '../../services/api';
 import useSWR from 'swr';
 import { CircularProgress } from '@material-ui/core';
@@ -41,7 +42,7 @@ const Home = () => {
 
     return (
         <>
-            <div className={style.pageContent}>
+            <div className={pageStyle.pageContent}>
                 <div>
                     <div className={style.cards}>
                         <div className={style.card}>
