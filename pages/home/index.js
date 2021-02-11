@@ -2,7 +2,6 @@ import style from './style.module.css';
 import api from '../../services/api';
 import useSWR from 'swr';
 import { CircularProgress } from '@material-ui/core';
-import { Apps } from '@material-ui/icons';
 import { useAuth } from '../../context/Auth';
 import { useRouter } from 'next/router';
 import { useState, useEffect, useRef } from 'react';
