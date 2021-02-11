@@ -4,7 +4,8 @@ const cookie = require('cookie');
 const api = axios.create({
     baseURL: 'http://localhost:3000/api',
     headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
     }
 });
 
