@@ -1,8 +1,7 @@
 const axios = require('axios');
-const cookie = require('cookie');
 
 const api = axios.create({
-    baseURL: '/api',
+    baseURL: `${process.env.APP_URL}/api`,
     headers: {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
