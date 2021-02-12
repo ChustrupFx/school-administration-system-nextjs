@@ -1,7 +1,8 @@
 const axios = require('axios');
+require('dotenv').config();
 
 const api = axios.create({
-    baseURL: process.env.VERCEL_URL + '/api',
+    baseURL: 'https://school-administration-system-nextjs-adf8jypb9.vercel.app/api',
     headers: {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
