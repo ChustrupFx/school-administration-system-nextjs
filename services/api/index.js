@@ -1,5 +1,4 @@
 const axios = require('axios');
-require('dotenv').config();
 
 const api = axios.create({
     baseURL: process.env.VERCEL_URL + '/api',
