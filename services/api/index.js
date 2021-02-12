@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 const api = axios.create({
-    baseURL: `${process.env.APP_URL}/api`,
+    baseURL: process.env.VERCEL_URL + '/api',
     headers: {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
